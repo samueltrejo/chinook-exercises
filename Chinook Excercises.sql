@@ -405,8 +405,9 @@ Provide a query that shows
 the top 3 best selling
 artists.
 ****************************/
---select top(3) Artist.Name,
---	count(Artist.ArtistId) as PurchasesWithArtist
+--select top(3) Artist.Name as ArtistName,
+--	count(Artist.ArtistId) as AmountOfPurchases,
+--	sum(InvoiceLine.UnitPrice) as TotalSales
 --from InvoiceLine
 --	join Track
 --		on InvoiceLine.TrackId = Track.TrackId
@@ -424,7 +425,8 @@ Provide a query that shows the
 most purchased Media Type.
 *****************************/
 --select MediaType.Name,
---	count(MediaType.Name) as PurchasesByMediaType
+--	count(MediaType.Name) as AmountOfPurchases,
+--	sum(InvoiceLine.UnitPrice) as TotalSales
 --from InvoiceLine
 --	join Track
 --		on InvoiceLine.TrackId = Track.TrackId
