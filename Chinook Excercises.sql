@@ -124,6 +124,12 @@ How many Invoices were there in
 --	OR InvoiceDate like '%2011%') as DateRange
 --group by DateRange.range
 
+--select year(Invoice.InvoiceDate),
+--	count(*)
+--from Invoice
+--where year(Invoice.InvoiceDate) in (2009, 2011)
+--group by year(Invoice.InvoiceDate)
+
 --select datepart(year, InvoiceDate) as [Year],
 --	count(invoiceId) as NumberOfInvoices
 --from Invoice
@@ -142,13 +148,18 @@ sales for each of those years?
 --from (
 --  select Invoice.Total,
 --    (case  
---    when Invoice.InvoiceDate between '2009' and '2010' then '2009'
---    when Invoice.InvoiceDate between '2010' and '2011' then '2010'
---    when Invoice.InvoiceDate between '2011' and '2012' then '2011'
+--    when Invoice.InvoiceDate like '%2009%' then '2009'
+--    when Invoice.InvoiceDate like '%2011%' then '2011'
 --	end) as DateRange
 --  from Invoice
---	where Invoice.InvoiceDate between '2009' and '2012') MyInvoiceTable
+--	where year(Invoice.InvoiceDate) in (2009, 2011)) MyInvoiceTable
 --group by DateRange
+
+--select year(Invoice.InvoiceDate),
+--	sum(Total)
+--from Invoice
+--where year(Invoice.InvoiceDate) in (2009, 2011)
+--group by year(Invoice.InvoiceDate)
 
 /*****************************************
 Query # 10: invoice_37_line_item_count.sql
@@ -382,6 +393,18 @@ most purchased track of 2013.
 --group by Track.Name,
 --	datepart(year, Invoice.InvoiceDate)
 --order by count(InvoiceLine.TrackId) desc
+
+----Nathan Example--
+--select Track.Name,
+--	sum(InvoiceLine.Quantity)
+--from InvoiceLine
+--	join Track
+--		on InvoiceLine.TrackId = Track.TrackId
+--	join Invoice
+--		on InvoiceLine.InvoiceId = Invoice.InvoiceId
+--where year(Invoice.InvoiceDate) = 2013
+--group by Track.TrackId, Track.Name
+--order by sum(InvoiceLine.Quantity) desc
 
 /***************************
 Query # 25: top_5_tracks.sql
